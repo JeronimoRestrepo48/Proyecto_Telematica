@@ -1,0 +1,27 @@
+# Binarios y logs
+server/server
+server/src/*.o
+server/*.log
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Java
+clients/java/*.class
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Entorno
+.env
+.env.local
+
+*.pdf
