@@ -146,3 +146,71 @@ CMD ["./server", "8888", "/app/server.log", "host.docker.internal", "5000"]
 ```
 
 (En Linux, usar la IP del host en lugar de `host.docker.internal` si auth corre en el host.)
+
+## 10. Troubleshooting y reinicio rapido (comandos usados en practicas)
+
+### 10.1 Conexion SSH (Windows)
+
+```bash
+ssh -i "C:\Users\SAMUEL\Downloads\labsuser.pem" ubuntu@98.91.154.40
+```
+
+### 10.2 Reiniciar servicios en la instancia AWS
+
+```bash
+sudo fuser -k 5000/tcp
+cd ~/Proyecto_Telematica/auth_service
+nohup python3 auth_server.py > ~/auth.log 2>&1 &
+disown
+
+sudo docker start iot-server
+
+sudo fuser -k 8080/tcp
+cd ~/Proyecto_Telematica/web_server
+nohup python3 app.py > ~/web.log 2>&1 &
+disown
+```
+
+Verificacion basica:
+
+```bash
+sudo docker ps
+ps aux | grep auth_server
+```
+
+### 10.3 Ejecutar simuladores de sensores (Windows, consola local)
+
+```bash
+cd C:\Users\SAMUEL\Downloads\Proyecto_Telematica\clients\python
+python sensor_simulator.py --host iot-monitor.ddns.net --type temperatura --id s1 --location "Sala A1"
+python sensor_simulator.py --host iot-monitor.ddns.net --type humedad --id s2 --location "Sala A2"
+python sensor_simulator.py --host iot-monitor.ddns.net --type presion --id s3 --location "Exterior"
+python sensor_simulator.py --host iot-monitor.ddns.net --type vibracion --id s4 --location "Maquina 1"
+python sensor_simulator.py --host iot-monitor.ddns.net --type consumo --id s5 --location "Cuadro electrico"
+```
+
+Interfaz web:
+
+```text
+http://iot-monitor.ddns.net:8080
+```
+
+### 10.4 Ejecutar cliente operador (Windows, consola local)
+
+```bash
+cd C:\Users\SAMUEL\Downloads\Proyecto_Telematica\clients\python
+python operator_client.py --host iot-monitor.ddns.net --port 8888
+```
+
+### 10.5 Si falla autenticacion o no responde web
+
+Repetir este flujo:
+
+```bash
+sudo fuser -k 5000/tcp
+cd ~/Proyecto_Telematica/auth_service
+nohup python3 auth_server.py > ~/auth.log 2>&1 &
+disown
+
+cd ~/Proyecto_Telematica/web_server
+```
