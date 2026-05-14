@@ -2,6 +2,13 @@
 
 Proyecto para la materia Internet: Arquitectura y Protocolos. Sistema con servidor central en C (sockets Berkeley), protocolo de aplicación propio, clientes en Python y Java, interfaz web e interfaz de operador con GUI, autenticación externa y despliegue en AWS.
 
+## Proyecto integrador final (Docker, NGINX, HTTPS, BD)
+
+En la rama **`final`** está implementado el **proyecto integrador** descrito en `Proyecto integrador  final-2026-1.pdf`:
+
+- Carpeta **`integrador-final/`**: `docker-compose` con **NGINX** (proxy inverso + **round robin** + **TLS**), dos aplicaciones web **Python/Flask** (una en **inglés**, otra en **español**), **PostgreSQL** y servicio de **estadísticas con gráficas por correo** (destinatario configurable; por defecto `ialondonoo@eafit.edu.co`).
+- Documentación de despliegue: **[docs/INTEGRADOR_FINAL.md](docs/INTEGRADOR_FINAL.md)**.
+
 ## Estructura del proyecto
 
 - **docs/PROTOCOLO.md** — Especificación completa del protocolo de aplicación.

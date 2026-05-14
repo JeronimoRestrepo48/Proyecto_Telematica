@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interest registration — English site</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; max-width: 36rem; margin: 2rem auto; padding: 0 1rem; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    input, select, button { width: 100%; margin-top: 0.35rem; padding: 0.5rem; box-sizing: border-box; }
+    button { margin-top: 1.25rem; cursor: pointer; background: #1a56db; color: #fff; border: 0; border-radius: 6px; }
+    .msg { padding: 0.75rem; border-radius: 6px; margin: 1rem 0; }
+    .ok { background: #ecfdf3; color: #065f46; }
+    .err { background: #fef2f2; color: #991b1b; }
+    .note { font-size: 0.9rem; color: #444; margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Program interest registration</h1>
+  <p>This server is deployed in <strong>English</strong> (fixed language).</p>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="msg {{ 'ok' if category == 'ok' else 'err' }}">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  <form method="post" action="/">
+    <label for="nombre">Full name</label>
+    <input id="nombre" name="nombre" required maxlength="255" />
+
+    <label for="comuna">Commune zone (city has 10 communes)</label>
+    <select id="comuna" name="comuna" required>
+      <option value="">Select…</option>
+      {% for i in range(1, 11) %}
+        <option value="{{ i }}">Commune {{ i }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="fecha_ingreso">Date information was entered</label>
+    <input id="fecha_ingreso" name="fecha_ingreso" type="date" required max="{{ today }}" />
+
+    <label for="carrera">Interested in studying</label>
+    <select id="carrera" name="carrera" required>
+      <option value="">Select…</option>
+      {% for value, label in carreras %}
+        <option value="{{ value }}">{{ label }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Submit</button>
+  </form>
+  <p class="note">Traffic reaches this site or the Spanish server via the NGINX load balancer (HTTPS, round robin).</p>
+</body>
+</html>

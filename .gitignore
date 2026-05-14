@@ -25,3 +25,7 @@ Thumbs.db
 .env.local
 
 *.pdf
+
+# Certificados locales del balanceador (integrador final)
+integrador-final/nginx/certs/*.crt
+integrador-final/nginx/certs/*.key
